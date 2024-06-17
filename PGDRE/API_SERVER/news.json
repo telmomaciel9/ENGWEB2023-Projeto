@@ -1,0 +1,16 @@
+[
+    {
+        "username": "Gonçalo",
+        "resourceName": "pacote1.zip",
+        "event": "Postou novos recursos",
+        "date": "22-abr-2023",
+        "visibility": "Public"
+    },
+    {
+        "username": "Gonçalo",
+        "resourceName": "pacote2.zip",
+        "event": "Postou novos recursos",
+        "date": "22-abr-2023",
+        "visibility": "Public"
+    }
+]

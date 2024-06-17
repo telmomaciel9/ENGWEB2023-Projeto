@@ -1,0 +1,26 @@
+extends layout
+
+block content
+    .w3-card-4
+    header.w3-container.w3-blue
+      h1 Login
+    
+    .w3-container  
+      form.w3-container(action="/login" method="POST")
+        fieldset 
+            legend Credenciais:
+            label Username 
+            input.w3-input(type="text" name="username")
+            
+            label Password 
+            input.w3-input(type="password" name="password")
+
+        input.w3-btn.w3-blue.w3-margin(type="submit" value="Login!")
+
+    if message != undefined
+      .w3-panel.w3-yellow
+        h3 Erro no login!
+        p= message
+
+    footer.w3-container.w3-blue
+      address Generated in PGDRE at #{d}

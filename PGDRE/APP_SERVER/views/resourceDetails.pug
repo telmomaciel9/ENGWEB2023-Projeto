@@ -1,0 +1,89 @@
+extends layout
+
+block content
+    .modal(id="display")
+    .w3-card-4
+    header.w3-container.w3-blue
+      h1 Recurso: #[i #{r.resourceName}]
+        .w3-right
+          a.w3-margin.w3-large(href="/home") Home
+            img.w3-margin(src="/images/home.png" alt="home icon" width="40" height="40")
+          a.w3-margin.w3-large(href="/resources") Recursos
+            img.w3-margin(src="/images/resources.png" alt="resources icon" width="40" height="40")
+          a.w3-margin.w3-large(href="/profile") Perfil
+            img.w3-margin(src="/images/profile.png" alt="profile icon" width="40" height="40")
+          a.w3-margin.w3-large(href="/logout") Logout  
+            img.w3-margin(src="/images/logout.png" alt="logout icon" width="40" height="40")
+
+    .w3-container
+        ul.w3-ul 
+            li #[b Conteúdo: ]
+              ul.w3-ul 
+                each f in r.files
+                  li= f
+            li #[b Título: ] #{r.title}
+            li #[b Subtítulo: ] #{r.subtitle}
+            li #[b Tipo: ] #{r.type}
+            li #[b Autor: ] #{r.author}
+            li #[b Submissor: ] #{r.submitter} 
+            li #[b Avaliação: ] #{r.evaluation.ev} ⭐
+            li #[b Operations:] 
+                a(href="/resources/download/" + r.resourceName) 
+                  img.w3-round-xlarge.w3-margin(src="/images/download.png" alt="download icon" width="30" height="30")
+                a(onclick='evaluateResource(\"' + r.resourceName + '\")')
+                  img.w3-round-xlarge.w3-margin(src="/images/estrela.png" alt="star icon" width="30" height="30")
+                if u.level == "admin" || (u.level == "producer" && r.submitter == u.username)
+                  a(href="/resources/edit/" + r.resourceName)
+                    img.w3-round-large.w3-margin(src="/images/edit.png" alt="edit icon" width="30" height="30")
+                  a(href="/resources/delete/" + r.resourceName)
+                    img.w3-round-large.w3-margin(src="/images/delete.png" alt="delete icon" width="30" height="30")
+
+        .w3-card-4
+          header.w3-container.w3-purple
+            h1 Posts #[a(href="/resources/" + r.resourceName + "/posts/add") #[img.w3-margin(src="/images/add.png" alt="add icon" width="30" height="30")]]
+
+          .w3-container
+            .w3-container
+              h4 Pesquisa
+              form.w3-container(action="/resources/" + r.resourceName + "/posts/search" method="POST")
+                select(name="filtro")
+                  option(value="title") Título
+                  option(value="likes") Gostos  
+                  option(value="username") Utilizador 
+                input#search.w3-margin-bottom(type="text" name="search")        
+                input.w3-margin-left(type="image" alt="search icon" src="/images/search.png" height="30" width="30") 
+              
+              table.w3-table-all
+                  tr 
+                      th Utilizador
+                      th Título
+                      th Descrição
+                      th Gostos
+                      th Data
+                      th Detalhes
+                      th Operações
+                  each p in ps 
+                      tr 
+                          td= p.username
+                          td= p.title
+                          td= p.description
+                          td= p.liked_by.length
+                          td= p.date
+                          td  
+                            a(href="/resources/" + r.resourceName + "/posts/" + p._id)
+                              img(src="/images/details.png" alt="details icon" width="30" height="30")
+                          td 
+                            - if(p.liked_by.includes(u.username))
+                              a.w3-margin(href="/resources/" + r.resourceName + "/posts/" + p._id + "/unlike")
+                                img.w3-round-large(src="/images/like.png" alt="like icon" width="30" height="30")
+                            - else 
+                              a.w3-margin(href="/resources/" + r.resourceName + "/posts/" + p._id + "/like")
+                                img.w3-round-large(src="/images/unlike.png" alt="unlike icon" width="30" height="30")
+                            if u.level == "admin" || u.username == p.username
+                              a.w3-margin(href="/resources/" + r.resourceName + "/posts/" + p._id + "/edit")
+                                img(src="/images/edit.png" alt="edit icon" width="30" height="30")
+                              a.w3-margin(href="/resources/" + r.resourceName + "/posts/" + p._id + "/delete")
+                                img(src="/images/delete.png" alt="delete icon" width="30" height="30")
+
+    footer.w3-container.w3-blue
+      address Generated in PGDRE at #{d} #[a#home(href="/home") Go back to home!]

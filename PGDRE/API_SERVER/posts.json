@@ -1,0 +1,22 @@
+[
+    {
+        "resourceName": "pacote1.zip",
+        "username": "Gonçalo",
+        "title": "Teste",
+        "description": "Primeiro post",
+        "liked_by": ["Gonçalo Santos", "Telmo Maciel"],
+        "date": "22-abr-2023",
+        "visibility": "Public",
+        "comments": []
+    },
+    {
+        "resourceName": "pacote2.zip",
+        "username": "Gonçalo",
+        "title": "Teste2",
+        "description": "Segundo post",
+        "liked_by": ["Gonçalo Santos", "Telmo Maciel"],
+        "date": "22-abr-2023",
+        "visibility": "Public",
+        "comments": []
+    }
+]

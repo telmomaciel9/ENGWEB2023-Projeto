@@ -1,0 +1,40 @@
+extends layout
+
+block content
+    .modal(id="display")
+    .w3-card-4
+    header.w3-container.w3-blue
+      h1 Página para desativação de um utilizador
+        .w3-right
+          a.w3-margin.w3-large(href="/home") Home
+            img.w3-margin(src="/images/home.png" alt="home icon" width="40" height="40")
+          a.w3-margin.w3-large(href="/resources") Recursos
+            img.w3-margin(src="/images/resources.png" alt="resources icon" width="40" height="40")
+          a.w3-margin.w3-large(href="/profile") Perfil
+            img.w3-margin(src="/images/profile.png" alt="profile icon" width="40" height="40")
+          a.w3-margin.w3-large(href="/logout") Logout  
+            img.w3-margin(src="/images/logout.png" alt="logout icon" width="40" height="40")
+
+    .w3-container
+      table.w3-table-all
+        tr
+          th Nome de Utilizador
+          th Nome
+          th Email 
+          th Nível
+          th Desativar
+        each u in us
+          tr 
+            td(onclick='showUser(\"/profile/deactivate/admin\", \"'+u.username+'\", \"'+u.level+'\", \"'+u.name+'\", \"'+u.email+'\", \"'+u.dateCreated+'\", \"'+u.lastAccess+'\", \"'+u.active+'\")')= u.username
+            td(onclick='showUser(\"/profile/deactivate/admin\", \"'+u.username+'\", \"'+u.level+'\", \"'+u.name+'\", \"'+u.email+'\", \"'+u.dateCreated+'\", \"'+u.lastAccess+'\", \"'+u.active+'\")')= u.name 
+            td(onclick='showUser(\"/profile/deactivate/admin\", \"'+u.username+'\", \"'+u.level+'\", \"'+u.name+'\", \"'+u.email+'\", \"'+u.dateCreated+'\", \"'+u.lastAccess+'\", \"'+u.active+'\")')= u.email 
+            td(onclick='showUser(\"/profile/deactivate/admin\", \"'+u.username+'\", \"'+u.level+'\", \"'+u.name+'\", \"'+u.email+'\", \"'+u.dateCreated+'\", \"'+u.lastAccess+'\", \"'+u.active+'\")')= u.level
+            td  
+              a(href="/profile/deactivate/" + u.username) 
+                img.w3-round-xlarge(src="/images/deactivate.png" alt="deactivate icon" width="30" height="30")
+    
+      button#cancel.w3-btn.w3-round.w3-red.w3-margin
+        a(href="/profile") Cancelar
+
+    footer.w3-container.w3-blue
+      address Generated in PGDRE at #{d} #[a#home(href="/home") Go back to home!]

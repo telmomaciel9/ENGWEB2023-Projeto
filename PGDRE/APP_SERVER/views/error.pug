@@ -1,0 +1,23 @@
+extends layout
+
+block content
+  .w3-card-4
+    header.w3-container.w3-red
+      h1 Erro #{error.status}
+
+    .w3-container
+      center  
+        if error.status == 404
+          h1#erro Página não encontrada
+        if error.status == 401
+          h1#erro Conta inexistente
+        else if token == false
+          h1#erro Erro na autenticação do utilizador
+          h2= error 
+        else
+          h1#erro #{error}
+           
+        img.w3-margin(src="/images/error.png" alt="error icon" width="500" height="500")
+
+    footer.w3-container.w3-red
+      address Generated in PGDRE #[a#home(href="/") Voltar para a página principal!]

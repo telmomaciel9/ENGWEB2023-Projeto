@@ -1,0 +1,46 @@
+extends layout
+
+block content
+  .w3-card-4
+    header.w3-container.w3-blue
+      h1 Formulário das Notícias
+        .w3-right
+          a.w3-margin.w3-large(href="/home") Home
+            img.w3-margin(src="/images/home.png" alt="home icon" width="40" height="40")
+          a.w3-margin.w3-large(href="/resources") Recursos
+            img.w3-margin(src="/images/resources.png" alt="resources icon" width="40" height="40")
+          a.w3-margin.w3-large(href="/profile") Perfil
+            img.w3-margin(src="/images/profile.png" alt="profile icon" width="40" height="40")
+          a.w3-margin.w3-large(href="/logout") Logout  
+           img.w3-margin(src="/images/logout.png" alt="logout icon" width="40" height="40")
+
+    .w3-container  
+        .w3-container.w3-margin
+        form.w3-container(action="/news/add" method="POST")
+            fieldset
+              input.w3-input.w3-border.w3-round.w3-margin.w3-light-grey(type="hidden" name="username" value=u.username)
+              if u.level == "admin"
+                label Nome do Recurso 
+                select(name="resourceName")
+                  each r in rs
+                    option(value=r.resourceName) #{r.resourceName}
+              if u.level == "producer"
+                label Nome do Recurso 
+                select(name="resourceName")
+                  each r in rs
+                    if r.submitter == u.username
+                      option(value=r.resourceName) #{r.resourceName}
+              br
+              label Evento
+              input.w3-input.w3-border.w3-round.w3-light-grey(type="text" name="event")
+            input.w3-btn.w3-green.w3-margin(type="submit" value="Submissão da Notícia!")
+            button.w3-btn.w3-round.w3-red.w3-margin
+              a(href="/home") Cancelar 
+              
+        if erro != undefined
+          .w3-panel.w3-yellow
+              h3 Erro:
+              p= erro
+
+    footer.w3-container.w3-blue
+      address Generated in PGDRE at #{d} #[a#home(href="/home") Go back to home!]

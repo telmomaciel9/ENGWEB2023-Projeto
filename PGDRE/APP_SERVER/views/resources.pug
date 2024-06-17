@@ -1,0 +1,79 @@
+extends layout
+
+block content
+    .modal(id="display")
+    .w3-card-4
+    header.w3-container.w3-blue
+      h1 Recursos 
+        if u.level == "admin" || u.level == "producer"
+          a(href="/resources/add") #[img.w3-margin(src="/images/add.png" alt="add icon" width="30" height="30")]
+      
+        .w3-right
+          a.w3-margin.w3-large(href="/home") Home
+            img.w3-margin(src="/images/home.png" alt="home icon" width="40" height="40")
+          a.w3-margin.w3-large(href="/resources") Recursos
+            img.w3-margin(src="/images/resources.png" alt="resources icon" width="40" height="40")
+          a.w3-margin.w3-large(href="/profile") Perfil
+            img.w3-margin(src="/images/profile.png" alt="profile icon" width="40" height="40")
+          a.w3-margin.w3-large(href="/logout") Logout  
+            img.w3-margin(src="/images/logout.png" alt="logout icon" width="40" height="40")
+
+    .w3-container
+      .w3-container
+        h3 Pesquisa
+        form.w3-container(action="/resources/search" method="POST")
+          select(name="filtro")
+            option(value="title") Título
+            option(value="type") Tipo  
+            option(value="author") Autor 
+          input#search.w3-margin-bottom(type="text" name="search")        
+          input.w3-margin-left(type="image" alt="search icon" src="/images/search.png" height="30" width="30") 
+          
+      hr
+
+      table.w3-table-all
+          tr
+              th Título
+              th Subtítulo
+              th Tipo
+              th Autor 
+              th Submissor  
+              th Visibilidade
+              th Avaliação
+              th Detalhes
+              th Avaliar
+              th Operações
+
+          each r in rs 
+            if r.visibility == "Public" || (r.visibility == "Private" && u.level == "admin") || (r.visibility == "Private" && u.level == "producer" && u.username == r.submitter)
+              tr 
+                  td= r.title
+                  if r.subtitle != undefined 
+                      td= r.subtitle
+                  else 
+                      td Indefinido
+                  td= r.type
+                  td= r.author
+                  td= r.submitter
+                  if r.visibility == "Public"
+                    td Público
+                  else 
+                    td Privado
+                  td #{r.evaluation.ev} ⭐
+                  td  
+                    a(href="/resources/" + r.resourceName)
+                      img.w3-margin(src="/images/details.png" alt="details icon" width="30" height="30")
+                  td
+                    a(onclick='evaluateResource(\"' + r.resourceName + '\")')
+                      img.w3-round-xlarge.w3-margin(src="/images/estrela.png" alt="star icon" width="30" height="30")
+                  td  
+                    a(href="/resources/download/" + r.resourceName) 
+                      img.w3-round-xlarge.w3-margin(src="/images/download.png" alt="download icon" width="30" height="30")
+                    if u.level == "admin" || (u.level == "producer" && r.submitter == u.username)
+                      a(href="/resources/edit/" + r.resourceName)
+                        img.w3-round-large.w3-margin(src="/images/edit.png" alt="edit icon" width="30" height="30")
+                      a(href="/resources/delete/" + r.resourceName)
+                        img.w3-round-large.w3-margin(src="/images/delete.png" alt="delete icon" width="30" height="30")
+
+    footer.w3-container.w3-blue
+      address Generated in PGDRE at #{d} #[a#home(href="/home") Go back to home!]

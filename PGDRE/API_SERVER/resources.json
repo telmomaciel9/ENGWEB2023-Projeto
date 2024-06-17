@@ -1,0 +1,33 @@
+[
+    {
+        "resourceName": "pacote1.zip",
+        "files": ["guiao-01.pdf",
+                  "guiao-02.pdf",
+                  "guiao-03.pdf",
+                  "guiao-04.pdf",
+                  "guiao-05.pdf",
+                  "guiao-06.pdf",
+                  "guiao-07.pdf"],
+        "title": "Fichas de SO",
+        "subtitle": "Introdução à cadeira",
+        "type": "Ficha",
+        "dateCreation": "21-abr-2023",
+        "dateSubmission": "21-abr-2023",
+        "visibility": "Public",
+        "author": "Gonçalo Santos",
+        "submitter": "Goncas"
+    },
+    {
+        "resourceName": "pacote2.zip",
+        "files": ["epocaespecial_2019.pdf",
+                  "Recurso_2019.pdf"],
+        "title": "Testes de SO",
+        "subtitle": "Final da cadeira",
+        "type": "Teste",
+        "dateCreation": "21-abr-2023",
+        "dateSubmission": "21-abr-2023",
+        "visibility": "Public",
+        "author": "Gonçalo Santos",
+        "submitter": "joaninha"
+    }
+]

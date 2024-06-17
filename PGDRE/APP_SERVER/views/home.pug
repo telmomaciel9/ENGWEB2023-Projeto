@@ -1,0 +1,65 @@
+extends layout
+
+block content
+  .modal(id="display")
+  .w3-card-4
+    header.w3-container.w3-blue
+      h1 Plataforma de Gestão e Disponibilização de Recursos Educativos
+    if u
+      if u.level == "admin"
+        h2.w3-margin-left Bem-vindo: #{u.username}! (Administrador/a)
+      if u.level == "producer"
+        h2.w3-margin-left Bem-vindo: #{u.username}! (Produtor/a)
+      if u.level == "consumer"
+        h2.w3-margin-left Bem-vindo: #{u.username}! (Consumidor/a)
+    
+    .w3-container
+      center
+        a.w3-margin.w3-large(href="/resources") Recursos
+          img.w3-margin(src="/images/resources.png" alt="resources icon" width="40" height="40")
+        a.w3-margin.w3-large(href="/profile") Perfil
+          img.w3-margin(src="/images/profile.png" alt="profile icon" width="40" height="40")
+        a.w3-margin.w3-large(href="/logout") Logout  
+          img.w3-margin(src="/images/logout.png" alt="logout icon" width="40" height="40")
+
+    .w3-container.w3-border
+        h2 Notícias 
+          if u.level == "admin" || u.level == "producer"
+            a(href="/news/add") #[img(src="/images/add.png" alt="add icon" width="30" height="30")]
+        
+        .w3-container
+          h4.w3-margin-left Pesquisa
+          form.w3-container(action="/news/search" method="POST")
+            select(name="filtro")
+              option(value="username") Utilizador
+              option(value="resourceName") Recurso
+              option(value="event") Evento 
+            input#search.w3-margin-bottom(type="text" name="search")        
+            input.w3-margin-left(type="image" alt="search icon" src="/images/search.png" height="30" width="30") 
+
+        table.w3-table-all
+          tr 
+            th Utilizador
+            th Recurso 
+            th Evento
+            th Data
+            if u.level == "admin" || u.level == "producer"
+              th Operações
+          each n in news
+            if n.visibility == "Public" || (n.visibility == "Private" && u.level == "admin") || (n.visibility == "Private" && u.username == n.username)
+              tr
+                td(onclick='showNews(\"'+n.username+'\", \"'+n.resourceName+'\", \"'+n.event+'\", \"'+n.date+'\", \"'+n.visibility+'\")')= n.username
+                td(onclick='showNews(\"'+n.username+'\", \"'+n.resourceName+'\", \"'+n.event+'\", \"'+n.date+'\", \"'+n.visibility+'\")')= n.resourceName 
+                td(onclick='showNews(\"'+n.username+'\", \"'+n.resourceName+'\", \"'+n.event+'\", \"'+n.date+'\", \"'+n.visibility+'\")')= n.event
+                td(onclick='showNews(\"'+n.username+'\", \"'+n.resourceName+'\", \"'+n.event+'\", \"'+n.date+'\", \"'+n.visibility+'\")')= n.date  
+                if u.level == "admin" || (u.level == "producer" && n.username == u.username)
+                  td
+                    a(href="/news/edit/" + n._id)
+                      img.w3-round-large.w3-margin-right.w3-margin-left(src="/images/edit.png" alt="edit icon" width="30" height="30")
+                    a(href="/news/delete/" + n._id)
+                      img.w3-round-large.w3-margin-right.w3-margin-left(src="/images/delete.png" alt="delete icon" width="30" height="30")
+                else 
+                  td Indisponível!
+
+    footer.w3-container.w3-blue
+      address Generated in PGDRE at #{d}
